@@ -11,7 +11,7 @@ public class CharacterRotationRightButton : MonoBehaviour, IPointerDownHandler, 
 
     void Update(){
         if(characterRotatingRight == true){
-            character.transform.Rotate(Vector3.down * Time.deltaTime * 100);
+            character.transform.Rotate(Vector3.down * Time.deltaTime * 150);
         }
     }
     public void OnPointerDown(PointerEventData eventData){

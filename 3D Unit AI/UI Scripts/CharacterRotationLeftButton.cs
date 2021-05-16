@@ -11,7 +11,7 @@ public class CharacterRotationLeftButton : MonoBehaviour, IPointerDownHandler, I
 
     void Update(){
         if(characterRotatingLeft == true){
-            character.transform.Rotate(Vector3.up * Time.deltaTime * 100);
+            character.transform.Rotate(Vector3.up * Time.deltaTime * 150);
         }
     }
     public void OnPointerDown(PointerEventData eventData){
