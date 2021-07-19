@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b397c188b15926440a2430726b57ae90, type: 3}
+  m_Name: IronAxeStats
+  m_EditorClassIdentifier: 
+  itemName: Iron Axe
+  itemSlot: HandSlot
+  leftHand: 0
+  itemIconMaterial: {fileID: 2100000, guid: 6b5d8ca9958caf0409ef5b991cfe2ae8, type: 2}
+  itemMaterial: {fileID: 2100000, guid: 6b5d8ca9958caf0409ef5b991cfe2ae8, type: 2}
+  weight: 2
+  damage: 15
+  weaponSpeed: 2
+  armor: 0
+  eulerAnglex: 0
+  eulerAngley: 0
+  eulerAnglez: 180
+  scalex: 45
+  scaley: 45
+  scalez: 442

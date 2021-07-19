@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b397c188b15926440a2430726b57ae90, type: 3}
+  m_Name: StoneAxeStats
+  m_EditorClassIdentifier: 
+  itemName: Stone Axe
+  itemSlot: HandSlot
+  leftHand: 0
+  itemIconMaterial: {fileID: 2100000, guid: 39a8db3bfa020554ebfe6137d7c2a371, type: 2}
+  itemMaterial: {fileID: 2100000, guid: 2ba35d954580ec74e94116d5ced57481, type: 2}
+  weight: 0
+  damage: 5
+  weaponSpeed: 0
+  armor: 0
+  eulerAnglex: -90
+  eulerAngley: 180
+  eulerAnglez: 0
+  scalex: 0
+  scaley: 0
+  scalez: 0
