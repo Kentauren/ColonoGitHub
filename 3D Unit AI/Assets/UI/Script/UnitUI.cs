@@ -34,7 +34,6 @@ public class UnitUI : MonoBehaviour{
     public TextMeshProUGUI cardNameTextUI;
     public TextMeshProUGUI jobTextUI;
     public HealthBar healthBar;
-    public ArmorBar armorBar;
 
     public List<GameObject> selectedUnitsUI = new List<GameObject>();
 
@@ -60,7 +59,6 @@ public class UnitUI : MonoBehaviour{
             GameObject unit1 = mainCamera.GetComponent<Select>().selectedObjects[0]; //Access the first object in the list
             Movement movement = unit1.GetComponent<Movement>();
             ObjectInfo objectInfo = unit1.GetComponent<ObjectInfo>();
-            armorBar.SetMaxHealth(objectInfo.currentArmor, objectInfo.maxArmor);
             healthBar.SetHealth(objectInfo.currentHealth);          
             if(movement.task == TaskList.Idle) {
                 currentTaskUI.text = "Idle"; //Changes the text to Idle in UnitUI
@@ -98,7 +96,6 @@ public class UnitUI : MonoBehaviour{
             for (int i = 0; i < mainCamera.GetComponent<Select>().selectedObjects.Count ; i++){
                 ObjectInfo newObjectInfo = mainCamera.GetComponent<Select>().selectedObjects[i].GetComponent<ObjectInfo>();
                 selectedUnitsUI[i].GetComponent<HealthBar>().SetHealth(newObjectInfo.currentHealth);
-                selectedUnitsUI[i].GetComponent<ArmorBar>().SetMaxHealth(newObjectInfo.currentArmor, newObjectInfo.maxArmor);
                 selectedUnitsUI[i].GetComponent<RawImage>().texture = newObjectInfo.unitIcon; //Gets the texture from the select unit and shows it in the unitsicon
             }
         }
