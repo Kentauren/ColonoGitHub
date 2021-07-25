@@ -24,7 +24,7 @@ public class ObjectInfo : MonoBehaviour
     public Transform rightHandTransform;
     public Transform leftHandTransform;
     public Transform backTransform;    
-    public Texture unitIcon;
+    public Material unitIcon;
     public UnitUI unitUI;
     public UnitGroupUI unitGroupUI;
     public bool isSelected = false;

@@ -147,7 +147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -212,5 +212,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293fbe32cdd02a54bac4204edcd9ccd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drag: 0
+  canvas: {fileID: 0}
+  dragObject: {fileID: 0}
+  cloneDragObject: {fileID: 0}
   itemObject: {fileID: 3086610342541249148, guid: 90186ee6f3bd31b4db930522665e8fba, type: 3}
+  hoverInfo: {fileID: 0}
+  nameInfoText: {fileID: 0}
+  weightInfoText: {fileID: 0}
+  damageInfoText: {fileID: 0}
+  weaponSpeedInfoText: {fileID: 0}
+  armorInfoText: {fileID: 0}
+  characterHead: {fileID: 0}
+  characterBody: {fileID: 0}
+  characterRightHand: {fileID: 0}
+  characterLeftHand: {fileID: 0}
+  characterBack: {fileID: 0}
+  handObjects: []
+  drag: 0
+  hoveringHoverInfo: 0
+  hoveringItemButton: 0
+  checkingHover: 0

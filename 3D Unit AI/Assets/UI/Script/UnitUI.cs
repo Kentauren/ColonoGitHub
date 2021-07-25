@@ -12,22 +12,19 @@ public class UnitUI : MonoBehaviour{
     public GameObject unitsInfo;
     public UnitGroupUI groupUI;
     public RectTransform groupUITransform;
-    public RawImage unitIcon;
+    public Image unitIcon;
     public Button formationButton;
     public Button patrolButtonUnitInfo;
     public Button patrolButtonUnitInfos;
     public Button standGroundButtonUnitInfo;
     public Button standGroundButtonUnitUnfos;
-    public RawImage formationButtonIcon;
-    public GameObject formationPanel;
-    public Texture squareFormationImg;
-    public Texture unorganizedFormationIMG;
-    public Texture lineFormationIMG;
-    public Texture circelFormationIMG;
+    public Image formationButtonIcon;
+    public Material dynamicFormationMaterial;
+    public Material randomFormationMaterial;
+    public Material circleFormationMaterial;
     private bool patrolButtonActive;
-    public bool squareFormation;
-    public bool unorganizedFormation;
-    public bool lineFormation;
+    public bool dynamicFormation;
+    public bool randomFormation;
     public bool circleFormation; 
     public TextMeshProUGUI currentTaskUI;
     public TextMeshProUGUI teamTextUI;
@@ -40,10 +37,8 @@ public class UnitUI : MonoBehaviour{
     void Start(){
         unitInfo.SetActive(false);
         unitsInfo.SetActive(false);
-        formationPanel.SetActive(true);
-        unorganizedFormation = true;
-        squareFormation = false;
-        lineFormation = false;
+        randomFormation = true;
+        dynamicFormation = false;
         circleFormation = false;
         patrolButtonActive = false;
     }
@@ -96,7 +91,7 @@ public class UnitUI : MonoBehaviour{
             for (int i = 0; i < mainCamera.GetComponent<Select>().selectedObjects.Count ; i++){
                 ObjectInfo newObjectInfo = mainCamera.GetComponent<Select>().selectedObjects[i].GetComponent<ObjectInfo>();
                 selectedUnitsUI[i].GetComponent<HealthBar>().SetHealth(newObjectInfo.currentHealth);
-                selectedUnitsUI[i].GetComponent<RawImage>().texture = newObjectInfo.unitIcon; //Gets the texture from the select unit and shows it in the unitsicon
+                selectedUnitsUI[i].GetComponent<RawImage>().material = newObjectInfo.unitIcon; //Gets the texture from the select unit and shows it in the unitsicon
             }
         }
     }
@@ -106,7 +101,7 @@ public class UnitUI : MonoBehaviour{
             unitInfo.SetActive(true);
             GameObject unit1 = mainCamera.GetComponent<Select>().selectedObjects[0];
             ObjectInfo objectInfo = unit1.GetComponent<ObjectInfo>();
-            unitIcon.texture = objectInfo.unitIcon;
+            unitIcon.material = objectInfo.unitIcon;
             UpdateText();
 
             //If groupUI = true: move groupUI to appropiate position
@@ -144,7 +139,6 @@ public class UnitUI : MonoBehaviour{
             groupUITransform.anchorMax = new Vector2(0.5f, 1); 
         }
         else if (mainCamera.GetComponent<Select>().selectedObjects.Count <= 1){
-            formationPanel.SetActive(false);
             unitsInfo.SetActive(false);
             patrolButtonActive = false;
             patrolButtonUnitInfo.GetComponent<Image>().color = Color.white;
@@ -160,38 +154,38 @@ public class UnitUI : MonoBehaviour{
         cardNameTextUI.text = objectInfo.cardName;
     }
 
-    public void TaskOnClick(){
+    public void FormationOnClick(){
 
-        if (formationPanel.activeSelf == false){
-            formationPanel.SetActive(true);
+        if(dynamicFormation == true){
+            CircleFormation();
         }
-        else{
-            formationPanel.SetActive(false);
+        else if(circleFormation == true){
+            RandomFormation();
+        }
+        else if(randomFormation == true){
+            DynamicFormation();
         }
     }
 
-    public void SquareFormation(){
-        formationButtonIcon.texture = squareFormationImg;
-        squareFormation = true;
-        unorganizedFormation = false;
-        lineFormation = false;
+    public void DynamicFormation(){
+        formationButtonIcon.material = dynamicFormationMaterial;
+        dynamicFormation = true;
+        randomFormation = false;
         circleFormation = false;
     }
 
-    public void UnorganizedFormation(){
-        formationButtonIcon.texture = unorganizedFormationIMG;
-        unorganizedFormation = true;
-        squareFormation = false;
-        lineFormation = false;
+    public void RandomFormation(){
+        formationButtonIcon.material = randomFormationMaterial;
+        randomFormation = true;
+        dynamicFormation = false;
         circleFormation = false;
     }
 
-    public void CircelFormation(){
-        formationButtonIcon.texture = circelFormationIMG;
+    public void CircleFormation(){
+        formationButtonIcon.material = circleFormationMaterial;
         circleFormation = true;
-        squareFormation = false;
-        unorganizedFormation = false;
-        lineFormation = false;
+        dynamicFormation = false;
+        randomFormation = false;
     }
 
     public void PatrolOnClick(){

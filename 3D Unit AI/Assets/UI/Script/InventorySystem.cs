@@ -22,8 +22,8 @@ public class InventorySystem : MonoBehaviour{
     public RectTransform selectedCard;
     public RectTransform contentView;
     public RectTransform nameInputField;
-    public Text weightText;
-    public Text armorText;
+    public TextMeshProUGUI weightTextValue;
+    public TextMeshProUGUI armorTextValue;
     public Material defaultHeadSlotMaterial;
     public Material defaultBodySlotMaterial;
     public Material defaultHandSlotMaterial;
@@ -46,10 +46,10 @@ public class InventorySystem : MonoBehaviour{
     public Transform characterRightHand;
     public Transform characterLeftHand;
     public Transform characterBack;
-    Color32 noItemsColor = new Color32(124, 124, 124, 255);
-    Color32 itemsColor = new Color32(252, 244, 228, 255);
-    Color32 uncompatibleColor = new Color32(140, 140, 140, 255);
-    Color32 compatibleColor = new Color32(255, 255, 255, 255);
+    Color32 noItemsColor = new Color32(60, 55, 47, 255);
+    Color32 itemsColor = new Color32(213, 183, 139, 255);
+    Color32 uncompatibleColor = new Color32(180, 70, 72, 255);
+    Color32 compatibleColor = new Color32(213, 183, 139, 255);
     public List<RectTransform> boardList = new List<RectTransform>();
     public Image headArmorShowListIcon;
     public Image bodyArmorShowListIcon;
@@ -425,8 +425,8 @@ public class InventorySystem : MonoBehaviour{
         }
         float totalArmor = headArmor + bodyArmor + clothingArmor + rightHandArmor + leftHandArmor + backArmor;
         float totalWeight = headWeight + bodyWeight + clothingWeight + rightHandWeight + leftHandWeight + backWeight;
-        weightText.text = totalWeight.ToString();
-        armorText.text = totalArmor.ToString();
+        weightTextValue.text = totalWeight.ToString();
+        armorTextValue.text = totalArmor.ToString();
         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().totalWeight = totalWeight; //adds the total amount of weight to the unitSpawnSystemCard
         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().totalArmor = totalArmor; //adds the total amount of armor to the unitSpawnSystemCard
         UpdateName();
@@ -485,16 +485,16 @@ public class InventorySystem : MonoBehaviour{
             if(headArmorShowList == false){
                 headArmorShowListIcon.material = minusIcon;
                 headArmorShowList = true;
-                float newSize = headArmorItemList.Count * 31;
+                float newSize = headArmorItemList.Count * 35;
                 headArmorParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < headArmorItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = headArmorItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = headArmorItemList[i].name;
                     itemObject.name = headArmorItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = headArmorItemList[i].gameObject; 
                     var cloneItemObject = Instantiate(itemObject, headArmorParent.transform);
                     headArmorItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -505,7 +505,7 @@ public class InventorySystem : MonoBehaviour{
                 {
                     Destroy(headArmorItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 headArmorItemButtonList.Clear();
             }            
@@ -520,16 +520,16 @@ public class InventorySystem : MonoBehaviour{
             if(bodyArmorShowList == false){
                 bodyArmorShowListIcon.material = minusIcon;
                 bodyArmorShowList = true;
-                float newSize = bodyArmorItemList.Count * 31;
+                float newSize = bodyArmorItemList.Count * 35;
                 bodyArmorParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < bodyArmorItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = bodyArmorItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = bodyArmorItemList[i].name;
                     itemObject.name = bodyArmorItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = bodyArmorItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, bodyArmorParent.transform);
                     bodyArmorItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -539,7 +539,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < bodyArmorItemButtonList.Count; i++){
                     Destroy(bodyArmorItemButtonList[i].gameObject);
                     
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 bodyArmorItemButtonList.Clear();
             }            
@@ -554,16 +554,16 @@ public class InventorySystem : MonoBehaviour{
             if(axesShowList == false){
                 axesShowListIcon.material = minusIcon;
                 axesShowList = true;
-                float newSize = axesItemList.Count * 31;
+                float newSize = axesItemList.Count * 35;
                 axesParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < axesItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = axesItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = axesItemList[i].name;
                     itemObject.name = axesItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = axesItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, axesParent.transform);
                     axesItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -573,7 +573,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < axesItemButtonList.Count; i++){
                     Destroy(axesItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 axesItemButtonList.Clear();
             }            
@@ -588,16 +588,16 @@ public class InventorySystem : MonoBehaviour{
             if(swordsShowList == false){
                 swordsShowListIcon.material = minusIcon;
                 swordsShowList = true;
-                float newSize = swordsItemList.Count * 31;
+                float newSize = swordsItemList.Count * 35;
                 swordsParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < swordsItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = swordsItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = swordsItemList[i].name;
                     itemObject.name = swordsItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = swordsItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, swordsParent.transform);
                     swordsItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -607,7 +607,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < swordsItemButtonList.Count; i++){
                     Destroy(swordsItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 swordsItemButtonList.Clear();
             }            
@@ -622,16 +622,16 @@ public class InventorySystem : MonoBehaviour{
             if(spearsShowList == false){
                 spearsShowListIcon.material = minusIcon;
                 spearsShowList = true;
-                float newSize = spearsItemList.Count * 31;
+                float newSize = spearsItemList.Count * 35;
                 spearsParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < spearsItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = spearsItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = spearsItemList[i].name;
                     itemObject.name = spearsItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = spearsItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, spearsParent.transform);
                     spearsItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -641,7 +641,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < spearsItemButtonList.Count; i++){
                     Destroy(spearsItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 spearsItemButtonList.Clear();
             }            
@@ -656,16 +656,16 @@ public class InventorySystem : MonoBehaviour{
             if(shieldsShowList == false){
                 shieldsShowListIcon.material = minusIcon;
                 shieldsShowList = true;
-                float newSize = shieldsItemList.Count * 31;
+                float newSize = shieldsItemList.Count * 35;
                 shieldsParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < shieldsItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = shieldsItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = shieldsItemList[i].name;
                     itemObject.name = shieldsItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = shieldsItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, shieldsParent.transform);
                     shieldsItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -675,7 +675,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < shieldsItemButtonList.Count; i++){
                     Destroy(shieldsItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 shieldsItemButtonList.Clear();
             }            
@@ -690,16 +690,16 @@ public class InventorySystem : MonoBehaviour{
             if(bowsShowList == false){
                 bowsShowListIcon.material = minusIcon;
                 bowsShowList = true;
-                float newSize = bowsItemList.Count * 31;
+                float newSize = bowsItemList.Count * 35;
                 bowsParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < bowsItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = bowsItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = bowsItemList[i].name;
                     itemObject.name = bowsItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = bowsItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, bowsParent.transform);
                     bowsItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -709,7 +709,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < bowsItemButtonList.Count; i++){
                     Destroy(bowsItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 bowsItemButtonList.Clear();
             }            
@@ -724,16 +724,16 @@ public class InventorySystem : MonoBehaviour{
             if(crossbowsShowList == false){
                 crossbowShowListIcon.material = minusIcon;
                 crossbowsShowList = true;
-                float newSize = crossbowItemList.Count * 31;
+                float newSize = crossbowItemList.Count * 35;
                 crossbowParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < crossbowItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = crossbowItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = crossbowItemList[i].name;
                     itemObject.name = crossbowItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = crossbowItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, crossbowParent.transform);
                     crossbowItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -743,7 +743,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < crossbowItemButtonList.Count; i++){
                     Destroy(crossbowItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 crossbowItemButtonList.Clear();
             }            
@@ -758,16 +758,16 @@ public class InventorySystem : MonoBehaviour{
             if(ammunitionShowList == false){
                 ammunitionShowListIcon.material = minusIcon;
                 ammunitionShowList = true;
-                float newSize = ammunitionItemList.Count * 31;
+                float newSize = ammunitionItemList.Count * 35;
                 ammunitionParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < ammunitionItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = ammunitionItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = ammunitionItemList[i].name;
                     itemObject.name = ammunitionItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = ammunitionItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, ammunitionParent.transform);
                     ammunitionItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -777,7 +777,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < ammunitionItemButtonList.Count; i++){
                     Destroy(ammunitionItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 ammunitionItemButtonList.Clear();
             }            
@@ -792,16 +792,16 @@ public class InventorySystem : MonoBehaviour{
             if(clothingShowList == false){
                 clothingShowListIcon.material = minusIcon;
                 clothingShowList = true;
-                float newSize = clothingItemList.Count * 31;
+                float newSize = clothingItemList.Count * 35;
                 clothingParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < clothingItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = clothingItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = clothingItemList[i].name;
                     itemObject.name = clothingItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = clothingItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, clothingParent.transform);
                     clothingItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -811,7 +811,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < clothingItemButtonList.Count; i++){
                     Destroy(clothingItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 clothingItemButtonList.Clear();
             }            
@@ -826,16 +826,16 @@ public class InventorySystem : MonoBehaviour{
             if(toolsShowList == false){
                 toolsShowListIcon.material = minusIcon;
                 toolsShowList = true;
-                float newSize = toolsItemList.Count * 31;
+                float newSize = toolsItemList.Count * 35;
                 toolsParent.sizeDelta += new Vector2(0,newSize);
                 for(int i = 0; i < toolsItemList.Count; i++){
-                    itemObject.GetComponentInChildren<Text>().text = toolsItemList[i].name;
+                    itemObject.GetComponentInChildren<TextMeshProUGUI>().text = toolsItemList[i].name;
                     itemObject.name = toolsItemList[i].name;
                     itemObject.GetComponent<InventoryItem>().itemObject = toolsItemList[i].gameObject;
                     var cloneItemObject = Instantiate(itemObject, toolsParent.transform);
                     toolsItemButtonList.Add(cloneItemObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y + 35);
                 }
             }
             else{
@@ -845,7 +845,7 @@ public class InventorySystem : MonoBehaviour{
                 for(int i = 0; i < toolsItemButtonList.Count; i++){
                     Destroy(toolsItemButtonList[i].gameObject);
 
-                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 30);
+                    contentView.sizeDelta = new Vector2(0, contentView.sizeDelta.y - 35);
                 }
                 toolsItemButtonList.Clear();
             }        

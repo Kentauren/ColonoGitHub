@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler{
@@ -12,7 +13,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public GameObject cloneDragObject;
     public GameObject itemObject;
     public RectTransform hoverInfo;
-    public Text nameInfoText;
+    public TextMeshProUGUI nameInfoText;
     public Text weightInfoText;
     public Text damageInfoText;
     public Text weaponSpeedInfoText;

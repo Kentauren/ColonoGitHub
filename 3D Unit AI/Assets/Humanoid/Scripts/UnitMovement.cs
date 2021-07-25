@@ -38,17 +38,17 @@ public class UnitMovement : MonoBehaviour{
             if(GetComponent<Select>().selectedObjects.Count > 1 && !Input.GetKey(KeyCode.LeftControl)){
                 RightClick();
             }            
-            if (GetComponent<Select>().selectedObjects.Count > 1 && !Input.GetKey(KeyCode.LeftControl) && rightclickPressed != true && unitUI.squareFormation == true){
+            if (GetComponent<Select>().selectedObjects.Count > 1 && !Input.GetKey(KeyCode.LeftControl) && rightclickPressed != true && unitUI.dynamicFormation == true){
                 rightclickPressed = true;
                 if(GetComponent<Select>().selectedObjects.Count > 1){
                     StartCoroutine(CheckMouseMovement());    
                 }                
             }
-            if (GetComponent<Select>().selectedObjects.Count > 1 && Input.GetKey(KeyCode.LeftControl) && unitUI.squareFormation == true){
+            if (GetComponent<Select>().selectedObjects.Count > 1 && Input.GetKey(KeyCode.LeftControl) && unitUI.dynamicFormation == true){
                 FaceDirection();
             }           
         }
-        if (Input.GetMouseButtonUp(1) && GetComponent<Select>().selectedObjects.Count > 1 && unitUI.squareFormation == true){
+        if (Input.GetMouseButtonUp(1) && GetComponent<Select>().selectedObjects.Count > 1 && unitUI.dynamicFormation == true){
             if(rightclickPressed == true && dynamicFormationActive == false){
                 Debug.Log("Premade formation is instantiated");
                 PremadeFormation();
@@ -70,7 +70,7 @@ public class UnitMovement : MonoBehaviour{
             if (hit.collider.tag == "Ground"){
                 if (GetComponent<Select>().selectedObjects.Count > 1){   
                     //RandomFormation
-                    if (unitUI.unorganizedFormation == true){
+                    if (unitUI.randomFormation == true){
                         //if PatrolActive = true, make false and reset endPoints
                         if(!Input.GetKey(KeyCode.LeftShift)){
                             ResetEndPoints();
