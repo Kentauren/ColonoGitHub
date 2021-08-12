@@ -9,6 +9,9 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     
     public Canvas canvas;
+    public InventoryCharacter inventoryCharacter;
+    public InventorySystem inventorySystem;
+    public UnitSpawnSystem unitSpawnSystem;
     public GameObject dragObject;
     public GameObject cloneDragObject;
     public GameObject itemObject;
@@ -20,6 +23,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Text armorInfoText;
     public Transform characterHead;
     public Transform characterBody;
+    public Transform characterBodyClothing;
     public Transform characterRightHand;
     public Transform characterLeftHand;
     public Transform characterBack;
@@ -79,118 +83,135 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         foreach (RaycastResult result in results){
             if(itemObject.GetComponent<Weapon>().itemInfo.itemSlot == result.gameObject.name){
                 //Checkcs if there is a card in the board, if there is'nt it will instantiate a new card
-                if(canvas.GetComponent<InventorySystem>().selectedCard == null){
-                    canvas.GetComponent<InventorySystem>().NewButtonOnClick();
+                if(inventorySystem.selectedCard == null){
+                    inventorySystem.NewButtonOnClick();
                 }
                 Debug.Log("Object has been dropped in" + result.gameObject.name);
                 if(itemObject.GetComponent<Weapon>().itemInfo.itemSlot == "HeadSlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
                     if(characterHead.childCount > 0){
                         Destroy(characterHead.GetChild(0).gameObject);
                     }
-                    var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                    canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterHeadCard = itemObject;
-                    canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterHeadCard = itemObject; 
+                    var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                    inventorySystem.selectedCard.GetComponent<UnitCard>().characterHeadCard = itemObject;
+                    unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterHeadCard = itemObject; 
                     GameObject newItemObject = Instantiate(itemObject, characterHead.transform.position, characterHead.transform.rotation);
-                    newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                    newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+                    
                     newItemObject.transform.SetParent(characterHead);
+                    newItemObject.transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
+                    newItemObject.transform.localPosition = new Vector3(itemInfo.posx, itemInfo.posy, itemInfo.posz);
                 }
                 if(itemObject.GetComponent<Weapon>().itemInfo.itemSlot == "BodySlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
                     if(characterBody.childCount > 0){
                         Destroy(characterBody.GetChild(0).gameObject);
                     }
-                    var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                    canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterBodyCard = itemObject;
-                    canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBodyCard = itemObject; 
+                    var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                    inventorySystem.selectedCard.GetComponent<UnitCard>().characterBodyCard = itemObject;
+                    unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBodyCard = itemObject; 
                     GameObject newItemObject = Instantiate(itemObject, characterBody.transform.position, characterBody.transform.rotation);
-                    newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                    newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+                    
                     newItemObject.transform.SetParent(characterBody);
+                    newItemObject.transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
+                    newItemObject.transform.localPosition = new Vector3(itemInfo.posx, itemInfo.posy, itemInfo.posz);
                 }
                 if(itemObject.GetComponent<Weapon>().itemInfo.itemSlot == "ClothingSlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
-                    canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterClothingCard = itemObject;
-                    canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterClothingCard = itemObject; 
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                    inventorySystem.selectedCard.GetComponent<UnitCard>().characterClothingCard = itemObject;
+                    unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterClothingCard = itemObject; 
                     characterBody.GetComponent<MeshRenderer>().material = itemObject.GetComponent<Weapon>().itemInfo.itemMaterial;
                 }
                 if(itemObject.gameObject.GetComponent<Weapon>().itemInfo.itemSlot == "HandSlot"){
                     if(itemObject.gameObject.GetComponent<Weapon>().itemInfo.leftHand == false){
-                        result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                        result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
                         if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot1"){
                             if(characterRightHand.childCount > 0){
                                 Destroy(characterRightHand.GetChild(0).gameObject);
                             }
-                            var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                            canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterRightHandCard = itemObject;
-                            canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterRightHandCard = itemObject; 
+                            var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                            inventorySystem.selectedCard.GetComponent<UnitCard>().characterRightHandCard = itemObject;
+                            unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterRightHandCard = itemObject; 
                             GameObject newItemObject = Instantiate(itemObject, characterRightHand.transform.position, characterRightHand.transform.rotation);
-                            newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                            newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+
                             newItemObject.transform.SetParent(characterRightHand);
+                            newItemObject.transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
                         }
                         if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot2"){
                             if(characterLeftHand.childCount > 0){
                                 Destroy(characterLeftHand.GetChild(0).gameObject);
                             }
-                            var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                            canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterLeftHandCard = itemObject;
-                            canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterLeftHandCard = itemObject; 
+                            var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                            inventorySystem.selectedCard.GetComponent<UnitCard>().characterLeftHandCard = itemObject;
+                            unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterLeftHandCard = itemObject; 
                             GameObject newItemObject = Instantiate(itemObject, characterLeftHand.transform.position, characterLeftHand.transform.rotation);
-                            newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                            newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+                            
                             newItemObject.transform.SetParent(characterLeftHand);
+                            newItemObject.transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
                         }
                         if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot3"){
                             if(characterBack.childCount > 0){
                                 Destroy(characterBack.GetChild(0).gameObject);
                             }
-                            var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                            canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterBackCard = itemObject;
-                            canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = itemObject; 
+                            var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                            inventorySystem.selectedCard.GetComponent<UnitCard>().characterBackCard = itemObject;
+                            unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = itemObject; 
                             GameObject newItemObject = Instantiate(itemObject, characterBack.transform.position, characterBack.transform.rotation);
-                            newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                            newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+                            
                             newItemObject.transform.SetParent(characterBack);
+                            newItemObject.transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
                         }  
                     }
                     else{
                         
                         if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot2"){
-                            result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                            result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
                             if(characterLeftHand.childCount > 0){
                                 Destroy(characterLeftHand.GetChild(0).gameObject);
                             }
-                            var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                            canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterLeftHandCard = itemObject;
-                            canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterLeftHandCard = itemObject; 
+                            var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                            inventorySystem.selectedCard.GetComponent<UnitCard>().characterLeftHandCard = itemObject;
+                            unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterLeftHandCard = itemObject; 
                             GameObject newItemObject = Instantiate(itemObject, characterLeftHand.transform.position, characterLeftHand.transform.rotation);
-                            newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                            newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+                            
                             newItemObject.transform.SetParent(characterLeftHand);
+                            newItemObject.transform.GetChild(0).transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
                         }
                         if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot3"){
-                            result.gameObject.transform.GetChild(1).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
+                            result.gameObject.transform.GetChild(0).GetComponent<Image>().material = itemObject.GetComponent<Weapon>().itemInfo.itemIconMaterial;
                             if(characterBack.childCount > 0){
                                 Destroy(characterBack.GetChild(0).gameObject);
                             }
-                            var itemAngle = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
-                            canvas.GetComponent<InventorySystem>().selectedCard.GetComponent<UnitCard>().characterBackCard = itemObject;
-                            canvas.GetComponent<UnitSpawnSystem>().selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = itemObject; 
+                            var itemInfo = itemObject.gameObject.GetComponent<Weapon>().itemInfo;
+                            inventorySystem.selectedCard.GetComponent<UnitCard>().characterBackCard = itemObject;
+                            unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = itemObject; 
                             GameObject newItemObject = Instantiate(itemObject, characterBack.transform.position, characterBack.transform.rotation);
-                            newItemObject.transform.Rotate(itemAngle.eulerAnglex, itemAngle.eulerAngley, itemAngle.eulerAnglez);
+                            newItemObject.transform.Rotate(itemInfo.eulerAnglex, itemInfo.eulerAngley, itemInfo.eulerAnglez);
+
                             newItemObject.transform.SetParent(characterBack);
+                            newItemObject.transform.GetChild(0).transform.localScale = new Vector3(itemInfo.scalex, itemInfo.scaley, itemInfo.scalez);
                         }  
                     }
                 }
-                canvas.GetComponent<InventorySystem>().UpdateStatsInfo();
+                inventoryCharacter.Animator(true);
+                inventorySystem.UpdateStatsInfo();
             }
             Debug.Log("Hit " + result.gameObject.name);
         }
         drag = false;
         Debug.Log("ItemButton is inactive");
         Destroy(cloneDragObject.gameObject);
-        canvas.GetComponent<InventorySystem>().ShowCompatibleSlot(drag, itemObject.GetComponent<Weapon>().itemInfo.itemSlot, itemObject.GetComponent<Weapon>().itemInfo.leftHand);
+        inventorySystem.ShowCompatibleSlot(drag, itemObject.GetComponent<Weapon>().itemInfo.itemSlot, itemObject.GetComponent<Weapon>().itemInfo.leftHand);
     }
 
     public void ShowHoverInfoOnEnter(){
         if(hoveringItemButton != true || hoveringHoverInfo != true){
-            StartCoroutine(ShowHoverInfo());
+            //StartCoroutine(ShowHoverInfo());
             hoverInfo.GetComponent<HoverInfo>().hoveringItemObject = gameObject;
         }
         hoveringItemButton = true;  

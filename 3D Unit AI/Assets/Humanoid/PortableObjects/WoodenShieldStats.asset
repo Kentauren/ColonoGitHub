@@ -22,5 +22,11 @@ MonoBehaviour:
   weaponSpeed: 0
   armor: 0
   eulerAnglex: 0
-  eulerAngley: 0
-  eulerAnglez: 180
+  eulerAngley: 180
+  eulerAnglez: 0
+  scalex: 1
+  scaley: 3.5
+  scalez: 40
+  posx: 0
+  posy: 0
+  posz: 0

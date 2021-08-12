@@ -21,4 +21,7 @@ public class WeaponStats : ScriptableObject {
     public float scalex;
     public float scaley;
     public float scalez; 
+    public float posx;
+    public float posy;
+    public float posz;
 }

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Iron Spear
   itemSlot: HandSlot
+  leftHand: 0
   itemIconMaterial: {fileID: 2100000, guid: 387b970da30776045911f58b5ba5100b, type: 2}
   itemMaterial: {fileID: 2100000, guid: 387b970da30776045911f58b5ba5100b, type: 2}
   weight: 1
@@ -23,3 +24,6 @@ MonoBehaviour:
   eulerAnglex: 0
   eulerAngley: 0
   eulerAnglez: 0
+  scalex: 0.15
+  scaley: 0.15
+  scalez: 7

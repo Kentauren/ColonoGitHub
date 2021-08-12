@@ -17,13 +17,16 @@ MonoBehaviour:
   leftHand: 0
   itemIconMaterial: {fileID: 2100000, guid: f4bec61a48a575242b6582033c54eb1c, type: 2}
   itemMaterial: {fileID: 2100000, guid: 02f6d166453c0a24197cc0868d1d4b68, type: 2}
-  weight: 0
-  damage: 4
+  weight: 3
+  damage: 3
   weaponSpeed: 0
   armor: 0
-  eulerAnglex: -90
-  eulerAngley: -90
-  eulerAnglez: 0
-  scalex: 70
-  scaley: 62
-  scalez: 70
+  eulerAnglex: 0
+  eulerAngley: 0
+  eulerAnglez: 90
+  scalex: 0.4
+  scaley: 0.3
+  scalez: 0.4
+  posx: 0
+  posy: 0
+  posz: 0

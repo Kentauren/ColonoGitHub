@@ -11,8 +11,8 @@ public class InventorySystem : MonoBehaviour{
     public Canvas canvas;
     public UnitSpawnSystem unitSpawnSystem;
     public BuildingSystem buildingSystem;
+    public InventoryCharacter inventoryCharacter;
     public GameObject inventorySystem;
-    public GameObject inventoryCharacter;
     public Material minusIcon;
     public Material plusIcon;
     public Button itemObject;
@@ -43,6 +43,7 @@ public class InventorySystem : MonoBehaviour{
     public Button backSlotButton;
     public Transform characterHead;
     public Transform characterBody;
+    public Transform characterBodyClothing;
     public Transform characterRightHand;
     public Transform characterLeftHand;
     public Transform characterBack;
@@ -154,42 +155,43 @@ public class InventorySystem : MonoBehaviour{
             raycaster.Raycast(pointerEventData, results);
             foreach (RaycastResult result in results){
                 if(result.gameObject.name == "HeadSlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultHeadSlotMaterial;
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = defaultHeadSlotMaterial;
                     Destroy(characterHead.GetChild(0).gameObject);
                     selectedCard.GetComponent<UnitCard>().characterHeadCard = null;
                     unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterHeadCard = null;
+                    inventoryCharacter.Animator(true);
                 }
                 if(result.gameObject.name == "BodySlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultBodySlotMaterial;
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = defaultBodySlotMaterial;
                     Destroy(characterBody.GetChild(0).gameObject);
                     selectedCard.GetComponent<UnitCard>().characterBodyCard = null;
                     unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBodyCard = null;
+                    inventoryCharacter.Animator(true);
                 }
                 if(result.gameObject.name == "ClothingSlot"){
-                    result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultClothingSlotMaterial;
-                    characterBody.GetComponent<MeshRenderer>().material = defaultClothing;
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = defaultClothingSlotMaterial;
+                    characterBodyClothing.GetComponent<MeshRenderer>().material = defaultClothing;
                     selectedCard.GetComponent<UnitCard>().characterClothingCard = null;
                     unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterClothingCard = null;
                 }
                 if(result.gameObject.name == "HandSlot"){
+                    result.gameObject.transform.GetChild(0).GetComponent<Image>().material = defaultHandSlotMaterial;
                     if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot1"){
-                        result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultHandSlotMaterial;
                         Destroy(characterRightHand.GetChild(0).gameObject);
                         selectedCard.GetComponent<UnitCard>().characterRightHandCard = null;
                         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterRightHandCard = null;
                     }
                     if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot2"){
-                        result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultHandSlotMaterial;
                         Destroy(characterLeftHand.GetChild(0).gameObject);
                         selectedCard.GetComponent<UnitCard>().characterLeftHandCard = null;
                         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterLeftHandCard = null;
                     }
                     if(result.gameObject.GetComponent<HandSlotID>().handSlotID == "HandSlot3"){
-                        result.gameObject.transform.GetChild(1).GetComponent<Image>().material = defaultHandSlotMaterial;
                         Destroy(characterBack.GetChild(0).gameObject);
                         selectedCard.GetComponent<UnitCard>().characterBackCard = null;
                         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = null;
-                    }                         
+                    }
+                    inventoryCharacter.Animator(true);                         
                 }
                 Debug.Log("Hit " + result.gameObject.name);
             }
@@ -317,6 +319,7 @@ public class InventorySystem : MonoBehaviour{
                 selectedCard.GetComponent<UnitCard>().ChangeLoadOut();
                 UpdateStatsInfo();
                 UpdateName();
+                inventoryCharacter.Animator(true);
             }
             else{
                 headSlotImage.material = defaultHeadSlotMaterial;
@@ -349,7 +352,7 @@ public class InventorySystem : MonoBehaviour{
             unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBodyCard = null;
         }
 
-        characterBody.GetComponent<MeshRenderer>().material = defaultClothing;
+        characterBodyClothing.GetComponent<SkinnedMeshRenderer>().material = defaultClothing;
         clothingSlotImage.material = defaultClothingSlotMaterial;
         selectedCard.GetComponent<UnitCard>().characterClothingCard = null;
         unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterClothingCard = null;
@@ -373,16 +376,17 @@ public class InventorySystem : MonoBehaviour{
             unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().characterBackCard = null;
         }
         UpdateStatsInfo();
+        inventoryCharacter.Animator(true);
     }
 
     public void EditNameOnClick(){
-        selectedCard.GetComponent<UnitCard>().nameField.text = nameInputField.GetComponent<InputField>().text.ToString();
-        unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().cardName.text = nameInputField.GetComponent<InputField>().text.ToString();
+        selectedCard.GetComponent<UnitCard>().nameInputField.GetComponent<TMP_InputField>().text = nameInputField.GetComponent<TMP_InputField>().text.ToString();
+        unitSpawnSystem.selectedSpawnCard.GetComponent<UnitSpawnCard>().cardName.text = nameInputField.GetComponent<TMP_InputField>().text.ToString();
         Debug.Log("Name has been edited");
     }
 
     public void UpdateName(){
-        nameInputField.GetComponent<InputField>().text = selectedCard.GetComponent<UnitCard>().nameField.text;        
+        nameInputField.GetComponent<TMP_InputField>().text = selectedCard.GetComponent<UnitCard>().nameInputField.GetComponent<TMP_InputField>().text.ToString();        
     }
 
     public void UpdateStatsInfo(){

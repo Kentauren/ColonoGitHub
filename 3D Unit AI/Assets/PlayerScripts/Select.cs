@@ -8,7 +8,7 @@ public class Select : MonoBehaviour{
 
     public GameObject selectedObject;
     public ObjectInfo selectedInfo;
-    public GameObject unitUI;
+    public UnitUI unitUI;
     public RTS_Camera rTS_Camera; 
     public List<ObjectInfo> selectedInfos = new List<ObjectInfo>();
     public List<GameObject> selectedObjects = new List<GameObject>();
@@ -16,7 +16,7 @@ public class Select : MonoBehaviour{
     public List<Transform> selectedTransforms = new List<Transform>();
     public RectTransform selectionBox;
     public bool selectionBoxIsActive;
-    private Vector3 startPos;
+    public Vector3 startPos;
     private Vector3 endPos;
     private Camera cam;
     Color32 defaultColorIcon = new Color32(255, 255, 255, 255);
@@ -31,10 +31,10 @@ public class Select : MonoBehaviour{
 
     public void Update(){
         if(Input.GetMouseButtonDown(0)){
-            if (!EventSystem.current.IsPointerOverGameObject()){
+            startPos = Input.mousePosition;
+            if(!EventSystem.current.IsPointerOverGameObject()){
                 LeftClick();
             }
-            startPos = Input.mousePosition;
         }
         if(Input.GetMouseButtonUp(0) && selectionBoxIsActive == true){
             ReleaseSelectionBox();
@@ -47,8 +47,8 @@ public class Select : MonoBehaviour{
     public void LeftClick(){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100)){
-            if (hit.collider.tag == "Ground" && !Input.GetKey(KeyCode.LeftShift)){
+        if(Physics.Raycast(ray, out hit, 100)){
+            if(hit.collider.tag == "Ground" && !Input.GetKey(KeyCode.LeftShift)){
                 Debug.Log("Deselected");
                 foreach (ObjectInfo item in selectedInfos){
                     item.isSelected = false;
@@ -63,7 +63,7 @@ public class Select : MonoBehaviour{
                 unitUI.GetComponent<UnitUI>().ActivateUnitUI(); //Checks if selectedObjects > 0 and deactivate or activates the correct UnitUI
                 Debug.Log("All objects are deselected");
             }
-            if (hit.collider.tag == "Selectable"){
+            if(hit.collider.tag == "Selectable"){
                 if(Input.GetKey(KeyCode.LeftShift)){
                     selectedObject = hit.collider.gameObject;
                     //Checks if selectedobject is already selected and if the maximum amount of units selected are below x
@@ -79,7 +79,7 @@ public class Select : MonoBehaviour{
                         Debug.Log("Selected with shift");
                     }
                     else{
-                        Debug.Log("Maximum of units are selected (30)");
+                        Debug.Log("Maximum of units are selected (50)");
                     }
                 }
                 else {
@@ -114,7 +114,6 @@ public class Select : MonoBehaviour{
     }
 
     void UpdateSelectionBox(Vector2 curMousePos){
-        if(!selectionBox.gameObject.activeInHierarchy)
         selectionBox.gameObject.SetActive(true);
         float width = curMousePos.x - startPos.x;
         float height = curMousePos.y - startPos.y;
@@ -127,9 +126,9 @@ public class Select : MonoBehaviour{
         Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
         foreach (GameObject unit in selectables){
             Vector3 screenPos = cam.WorldToScreenPoint(unit.transform.position);
-            if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y){
+            if(screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y){
                 //Checks if selectedobject is already selected and if the maximum amount of units selected are below x
-                if (unit.GetComponent<ObjectInfo>().isSelected == false && selectedObjects.Count < 30){
+                if(unit.GetComponent<ObjectInfo>().isSelected == false && selectedObjects.Count < 30){
                     selectedObjects.Add(unit);
                     selectedTransforms.Add(unit.GetComponent<Transform>());
                     selectedInfos.Add(unit.GetComponent<ObjectInfo>());
@@ -137,12 +136,12 @@ public class Select : MonoBehaviour{
                             item.isSelected = true;
                         }
                     unitUI.GetComponent<UnitUI>().selectedUnitsUI[selectedInfos.Count - 1].SetActive(true); //Sets the amount of selected units to active in the UnitsUI
-                    unitUI.GetComponent<UnitUI>().selectedUnitsUI[selectedInfos.Count - 1].GetComponent<RawImage>().color = defaultColorIcon;
+                    unitUI.GetComponent<UnitUI>().selectedUnitsUI[selectedInfos.Count - 1].GetComponent<Image>().color = defaultColorIcon;
                     unitUI.GetComponent<UnitUI>().ActivateUnitUI(); //Checks if selectedObjects > 0 and deactivate or activates the correct UnitUI
                     Debug.Log("You have selected multiply units");
                 }
                 else{
-                    Debug.Log("Maximum of units are selected (30)");
+                    Debug.Log("Maximum of units are selected (50)");
                 }
             }
         }

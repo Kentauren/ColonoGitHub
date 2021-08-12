@@ -12,7 +12,7 @@ public class UnitUI : MonoBehaviour{
     public GameObject unitsInfo;
     public UnitGroupUI groupUI;
     public RectTransform groupUITransform;
-    public Image unitIcon;
+    public RawImage unitIcon;
     public Button formationButton;
     public Button patrolButtonUnitInfo;
     public Button patrolButtonUnitInfos;

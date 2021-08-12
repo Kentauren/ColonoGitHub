@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour{
             if (!agent.pathPending){
                 if (agent.remainingDistance < 0.5){
                     //Code below is when unit has arrived to the endPoint position
-                    if (!agent.hasPath || agent.velocity.sqrMagnitude >= 0.5){ 
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude >= 0.0){ 
                         Debug.Log("Unit has arrived");
                         task = TaskList.Idle;
                         agent.ResetPath();
@@ -1264,6 +1264,10 @@ public class Movement : MonoBehaviour{
         var rightHandObject = objectInfo.rightHand;
         var leftHandObject = objectInfo.leftHand;
         if(task == TaskList.Moving){
+            m_Animator.Stop();
+            m_Animator["Walk"].layer = 1;
+            m_Animator.Play("Walk");
+            m_Animator["Walk"].weight = .3f;
             if(rightHandObject != null){
                 if(rightHandObject.tag == "Spear"){
                     m_Animator["MovingwSpear"].layer = 2;
@@ -1277,17 +1281,21 @@ public class Movement : MonoBehaviour{
                 }
             }
             if(rightHandObject == null){
-
+                m_Animator["WalkEmptyRightHand"].layer = 2;
+                m_Animator.Play("WalkEmptyRightHand");
+                m_Animator["WalkEmptyRightHand"].weight = .3f;
             }
             if(leftHandObject != null){
                 if(leftHandObject.tag == "Shield"){
-                    m_Animator["IdlewSpear"].layer = 2;
-                    m_Animator.Play("IdlewSpear");
-                    m_Animator["IdlewSpear"].weight = .3f;
+                    m_Animator["WalkShieldLeftHand"].layer = 2;
+                    m_Animator.Play("WalkShieldLeftHand");
+                    m_Animator["WalkShieldLeftHand"].weight = .3f;
                 }
             }
             if(leftHandObject == null){
-
+                m_Animator["WalkEmptyLeftHand"].layer = 3;
+                m_Animator.Play("WalkEmptyLeftHand");
+                m_Animator["WalkEmptyLeftHand"].weight = .3f;
             } 
         }
         if(task == TaskList.Idle || task == TaskList.HeadingToLog || task == TaskList.HeadingToTree || task == TaskList.HeadingTowardsStorage){
@@ -1314,9 +1322,9 @@ public class Movement : MonoBehaviour{
             }
             if(leftHandObject != null){
                 if(leftHandObject.tag == "Shield"){
-                    m_Animator["IdleLeftHand"].layer = 1;
-                    m_Animator.Play("IdleLeftHand");
-                    m_Animator["IdleLeftHand"].weight = .3f;                    
+                    m_Animator["IdleShieldLeftHand"].layer = 1;
+                    m_Animator.Play("IdleShieldLeftHand");
+                    m_Animator["IdleShieldLeftHand"].weight = .3f;                    
                 }
             }
             if(leftHandObject == null){
@@ -1400,7 +1408,7 @@ public class Movement : MonoBehaviour{
             }
             if(leftHandObject != null){
                 if(leftHandObject.tag == "Shield"){
-                    m_Animator.Play("BlockwShield");
+                    m_Animator.Play("BlockShieldLeftHand");
                 }
             }
             if(leftHandObject == null){

@@ -14,12 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Helmet
   itemSlot: HeadSlot
+  leftHand: 0
   itemIconMaterial: {fileID: 2100000, guid: 5deab8019b722224592bf144df420ff0, type: 2}
   itemMaterial: {fileID: 2100000, guid: 5deab8019b722224592bf144df420ff0, type: 2}
   weight: 5
   damage: 0
   weaponSpeed: 0
   armor: 8
-  eulerAnglex: 0
+  eulerAnglex: -90
   eulerAngley: 0
   eulerAnglez: 180
+  scalex: 1.2
+  scaley: 1.2
+  scalez: 1.26
+  posx: 0
+  posy: -0.0098
+  posz: 0.000643
